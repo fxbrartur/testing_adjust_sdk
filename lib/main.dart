@@ -1,11 +1,17 @@
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+
+  AdjustConfig config = AdjustConfig('MyAppToken', AdjustEnvironment.sandbox);
+  Adjust.start(config);
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -31,9 +37,36 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    initPlatformState(); // <-- Initialise Adjust's SDK in here.
+  }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.resumed:
+        Adjust.onResume();
+        break;
+      case AppLifecycleState.paused:
+        Adjust.onPause();
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,4 +112,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+  void initPlatformState() {}
 }

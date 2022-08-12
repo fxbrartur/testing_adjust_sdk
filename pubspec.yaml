@@ -33,6 +33,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  adjust_sdk: ^4.31.0
   flutter:
     sdk: flutter
 
