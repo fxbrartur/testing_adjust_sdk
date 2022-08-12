@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 
-  AdjustConfig config = AdjustConfig('MyAppToken', AdjustEnvironment.sandbox);
+  AdjustConfig config = AdjustConfig('{MyAppToken}', AdjustEnvironment.sandbox);
   Adjust.start(config);
 }
 
