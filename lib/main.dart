@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 
-  AdjustConfig config = AdjustConfig('5j72yhzskhz4', AdjustEnvironment.sandbox);
+  AdjustConfig config = AdjustConfig('{MyAppToken}', AdjustEnvironment.sandbox);
   Adjust.start(config);
   config.logLevel = AdjustLogLevel.verbose;
 }
